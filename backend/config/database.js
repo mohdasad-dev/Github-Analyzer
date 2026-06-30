@@ -2,17 +2,28 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 // Create connection pool for better performance and concurrency
+// const pool = mysql.createPool({
+//   host: process.env.DB_HOST || 'localhost',
+//   user: process.env.DB_USER || 'root',
+//   password: process.env.DB_PASSWORD,
+//   database: process.env.DB_NAME || 'github_analyzer',
+//   port: process.env.DB_PORT || 3306,
+//   waitForConnections: true,
+//   connectionLimit: 10,
+//   queueLimit: 0,
+//   enableKeepAlive: true,
+//   keepAliveInitialDelayMs: 0,
+// });
+
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME || 'github_analyzer',
-  port: process.env.DB_PORT || 3306,
+  database: process.env.DB_NAME,
+  port: Number(process.env.DB_PORT),
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  enableKeepAlive: true,
-  keepAliveInitialDelayMs: 0,
 });
 
 // Test connection on startup
@@ -21,9 +32,14 @@ pool.getConnection()
     console.log('✓ MySQL Database Connected Successfully');
     connection.release();
   })
+  // .catch(err => {
+  //   console.error('✗ MySQL Connection Failed:', err.message);
+  //   process.exit(1);
+  // });
   .catch(err => {
-    console.error('✗ MySQL Connection Failed:', err.message);
-    process.exit(1);
-  });
+
+    console.error("Database connection failed:", err.message);
+
+});
 
 module.exports = pool;
