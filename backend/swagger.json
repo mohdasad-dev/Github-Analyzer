@@ -1,0 +1,271 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "GitHub Profile Analyzer API",
+    "description": "Backend service to analyze GitHub user profiles and store insights in MySQL",
+    "version": "1.0.0",
+    "contact": {
+      "name": "MD Asad",
+      "url": "https://github.com/mdasad"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/api/analyze": {
+      "post": {
+        "summary": "Analyze a GitHub user profile",
+        "description": "Fetch GitHub profile data and store analysis in database",
+        "tags": ["Analysis"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["username"],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "torvalds",
+                    "minLength": 1,
+                    "maxLength": 39
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile analyzed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "data": { "type": "object" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/profiles": {
+      "get": {
+        "summary": "Get all analyzed profiles",
+        "description": "Retrieve all analyzed profiles with pagination",
+        "tags": ["Profiles"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": { "type": "integer", "default": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Results per page",
+            "schema": { "type": "integer", "default": 20, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of profiles"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/profile/{username}": {
+      "get": {
+        "summary": "Get detailed profile",
+        "description": "Get comprehensive profile data with repositories and analysis history",
+        "tags": ["Profiles"],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "GitHub username",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile details"
+          },
+          "404": {
+            "description": "Profile not found"
+          }
+        }
+      }
+    },
+    "/api/profile/{username}/repositories": {
+      "get": {
+        "summary": "Get user repositories",
+        "description": "Get repositories with sorting and filtering",
+        "tags": ["Repositories"],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "GitHub username",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of repos",
+            "schema": { "type": "integer", "default": 20 }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort by field",
+            "schema": { "type": "string", "enum": ["stars", "forks", "created"] }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Sort order",
+            "schema": { "type": "string", "enum": ["ASC", "DESC"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of repositories"
+          },
+          "404": {
+            "description": "Profile not found"
+          }
+        }
+      }
+    },
+    "/api/profile/{username}/languages": {
+      "get": {
+        "summary": "Get language distribution",
+        "description": "Get programming language distribution across repositories",
+        "tags": ["Analysis"],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "GitHub username",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Language distribution"
+          },
+          "404": {
+            "description": "Profile not found"
+          }
+        }
+      }
+    },
+    "/api/statistics": {
+      "get": {
+        "summary": "Get overall statistics",
+        "description": "Get aggregate statistics across all analyzed profiles",
+        "tags": ["Statistics"],
+        "responses": {
+          "200": {
+            "description": "Overall statistics"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/search": {
+      "get": {
+        "summary": "Search profiles",
+        "description": "Search analyzed profiles by username or name",
+        "tags": ["Search"],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query",
+            "schema": { "type": "string", "minLength": 2 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results"
+          },
+          "400": {
+            "description": "Invalid search query"
+          }
+        }
+      }
+    },
+    "/api/rate-limit": {
+      "get": {
+        "summary": "Check rate limits",
+        "description": "Get GitHub API rate limit status",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "Rate limit information"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Analysis",
+      "description": "Profile analysis operations"
+    },
+    {
+      "name": "Profiles",
+      "description": "Profile retrieval operations"
+    },
+    {
+      "name": "Repositories",
+      "description": "Repository retrieval operations"
+    },
+    {
+      "name": "Statistics",
+      "description": "Statistics operations"
+    },
+    {
+      "name": "Search",
+      "description": "Search operations"
+    },
+    {
+      "name": "System",
+      "description": "System information"
+    }
+  ]
+}
