@@ -27,13 +27,13 @@ A full-stack GitHub Profile Analyzer built with **React**, **Node.js**, **Expres
 
 ## 🏠 Home Page
 
-![Home Page](./assets/home.png)
+![Home Page](./assests/home.png)
 
 ---
 
 ## 📊 Analysis Result
 
-![Analysis Result](./assets/Result.png)
+![Analysis Result](./assests/Result.png)
 
 ---
 
