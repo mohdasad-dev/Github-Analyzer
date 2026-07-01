@@ -1,52 +1,100 @@
 # 🚀 GitHub Profile Analyzer
 
-A full-stack GitHub Profile Analyzer that fetches and analyzes public GitHub profiles using the GitHub REST API. The application provides detailed developer insights, repository analytics, language statistics, and stores all analyzed data in a MySQL database for future reference.
+A full-stack GitHub Profile Analyzer built with **React**, **Node.js**, **Express.js**, **MySQL**, and the **GitHub REST API**. The application analyzes any public GitHub profile, generates developer insights, and stores the analysis in a MySQL database for future reference.
+
+![React](https://img.shields.io/badge/React-19-blue)
+![Node.js](https://img.shields.io/badge/Node.js-Express-green)
+![MySQL](https://img.shields.io/badge/Database-MySQL-orange)
+![GitHub API](https://img.shields.io/badge/API-GitHub-black)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
 
-## 📌 Overview
+# 🌐 Live Demo
 
-GitHub Profile Analyzer is designed to help developers, recruiters, and organizations quickly analyze any public GitHub profile. Instead of manually browsing GitHub, users can simply enter a GitHub username and receive comprehensive insights about repositories, programming languages, stars, forks, followers, and more.
+**Frontend:**  
+👉 https://github-analyzer-uzc4.vercel.app
 
-The project follows a clean client-server architecture where the frontend interacts with a RESTful backend API. The backend communicates with GitHub, processes repository data, calculates metrics, and stores everything in MySQL for historical tracking and future analysis.
+---
+
+# 📂 Source Code
+
+👉 https://github.com/mohdasad-dev/Github-Analyzer
+
+---
+
+# 📸 Screenshots
+
+## 🏠 Home Page
+
+![Home Page](./assets/home.png)
+
+---
+
+## 📊 Analysis Result
+
+![Analysis Result](./assets/Result.png)
+
+---
+
+# 📌 Overview
+
+GitHub Profile Analyzer helps developers, recruiters, and organizations quickly analyze any public GitHub profile.
+
+Instead of manually browsing GitHub, users simply enter a GitHub username to receive detailed information including repositories, programming languages, stars, forks, followers, repository analytics, and other useful insights.
+
+The application follows a clean client-server architecture where the React frontend communicates with a RESTful Express backend. The backend fetches data from the GitHub REST API, processes repository statistics, calculates developer insights, stores the information in MySQL, and returns structured JSON responses.
+
+---
+
+# 💡 Why this Project?
+
+This project demonstrates real-world backend development by integrating a third-party API, processing large datasets, storing structured information in MySQL, and exposing RESTful APIs.
+
+Although the assignment focused on backend development, a modern React frontend was added to provide an intuitive user interface and demonstrate full-stack development skills.
 
 ---
 
 # ✨ Features
 
-## Frontend
+## 🎨 Frontend
 
 - 🔍 Search any public GitHub username
-- 👤 Display developer profile information
+- 👤 Developer profile page
 - 📂 Repository listing
 - 📊 Language distribution
 - ⭐ Repository statistics
-- 📱 Responsive UI
+- 📱 Fully responsive UI
 - ⚡ Fast API integration
-- ❌ Error handling and loading states
+- ⏳ Loading animations
+- ❌ Error handling
+- 📜 Analysis history page
 
 ---
 
-## Backend
+## ⚙ Backend
 
 ### GitHub API Integration
 
-- Fetch public GitHub profile
+- Fetch GitHub profile
 - Fetch repositories
 - Analyze repository data
-- Fetch GitHub API rate limit
+- GitHub API rate limit endpoint
 
 ### Developer Analytics
 
 - Total repositories
 - Total stars
 - Total forks
-- Average stars per repository
+- Average stars
 - Most starred repository
 - Most forked repository
-- Followers & Following
+- Followers
+- Following
 - Public gists
 - Programming language distribution
+- Account age
+- Repository insights
 
 ### Database Storage
 
@@ -58,12 +106,15 @@ Stores:
 - Analysis History
 - API Activity Logs
 
-### Validation
+### Validation & Security
 
-- Request validation using Joi
-- GitHub username validation
-- Error handling
+- Joi validation
+- Username validation
 - Input sanitization
+- Helmet
+- CORS
+- Rate Limiting
+- Centralized Error Handling
 
 ---
 
@@ -72,7 +123,9 @@ Stores:
 ## Frontend
 
 - React
+- React Router
 - Tailwind CSS
+- Vite
 
 ## Backend
 
@@ -89,17 +142,15 @@ Stores:
 
 # 🗄 Database Schema
 
-The project uses **MySQL** with the following tables:
+## profiles
 
-### profiles
-
-Stores:
+Stores
 
 - GitHub ID
 - Username
 - Name
 - Bio
-- Avatar
+- Avatar URL
 - Profile URL
 - Followers
 - Following
@@ -114,9 +165,9 @@ Stores:
 
 ---
 
-### user_repositories
+## user_repositories
 
-Stores:
+Stores
 
 - Repository Name
 - Repository URL
@@ -132,9 +183,9 @@ Stores:
 
 ---
 
-### analysis_history
+## analysis_history
 
-Tracks:
+Stores
 
 - Repository Count
 - Followers
@@ -144,12 +195,12 @@ Tracks:
 
 ---
 
-### api_logs
+## api_logs
 
-Tracks:
+Stores
 
 - Username
-- API Endpoint
+- Endpoint
 - Status Code
 - Response Time
 - Timestamp
@@ -159,66 +210,128 @@ Tracks:
 # 📂 Project Structure
 
 ```text
-github-profile-analyzer/
+Github-Analyzer
 │
-├── config/
-│   ├── database.js
+├── frontend
+│   ├── src
+│   ├── components
+│   ├── pages
+│   ├── api.js
+│   └── ...
 │
-├── middleware/
-│   ├── validation.js
+├── backend
+│   ├── config
+│   ├── middleware
+│   ├── routes
+│   ├── services
+│   ├── database.sql
+│   └── server.js
 │
-├── routes/
-│   ├── profileRoutes.js
+├── assets
+│   ├── home.png
+│   └── Result.png
 │
-├── services/
-│   ├── githubService.js
-│   ├── profileService.js
-│
-├── database.sql
-├── server.js
-├── package.json
-├── .env.example
 └── README.md
 ```
 
 ---
 
-# 🔄 Project Workflow
+# 🔄 System Architecture
 
 ```text
-User
+Frontend (React)
 
-↓
+        │
 
-Frontend
-
-↓
+        ▼
 
 Express REST API
 
-↓
+        │
+
+        ▼
 
 GitHub REST API
 
-↓
+        │
+
+        ▼
 
 Repository Analysis
 
-↓
+        │
+
+        ▼
 
 Developer Metrics Calculation
 
-↓
+        │
+
+        ▼
 
 MySQL Database
 
-↓
+        │
+
+        ▼
 
 JSON Response
 
-↓
+        │
+
+        ▼
 
 Frontend Dashboard
+```
+
+---
+
+# 📈 API Workflow
+
+```text
+Enter Username
+
+      │
+
+      ▼
+
+POST /api/analyze
+
+      │
+
+      ▼
+
+Fetch GitHub Profile
+
+      │
+
+      ▼
+
+Fetch User Repositories
+
+      │
+
+      ▼
+
+Calculate Developer Metrics
+
+      │
+
+      ▼
+
+Store Analysis in MySQL
+
+      │
+
+      ▼
+
+Return JSON Response
+
+      │
+
+      ▼
+
+Display Dashboard
 ```
 
 ---
@@ -226,12 +339,12 @@ Frontend Dashboard
 # 📡 REST API Endpoints
 
 | Method | Endpoint | Description |
-|----------|-----------------------------|--------------------------------------|
+|---------|----------|-------------|
 | POST | `/api/analyze` | Analyze GitHub Profile |
-| GET | `/api/profiles` | Get All Analyzed Profiles |
-| GET | `/api/profile/:username` | Get Detailed Profile |
+| GET | `/api/profiles` | Get All Profiles |
+| GET | `/api/profile/:username` | Get Profile Details |
 | GET | `/api/profile/:username/repositories` | Get User Repositories |
-| GET | `/api/profile/:username/languages` | Get Language Distribution |
+| GET | `/api/profile/:username/languages` | Language Distribution |
 | GET | `/api/search?q=username` | Search Profiles |
 | GET | `/api/statistics` | Overall Statistics |
 | GET | `/api/rate-limit` | GitHub API Rate Limit |
@@ -239,7 +352,7 @@ Frontend Dashboard
 
 ---
 
-# 📥 Installation
+# 🚀 Installation
 
 ## Clone Repository
 
@@ -249,10 +362,10 @@ git clone https://github.com/mohdasad-dev/Github-Analyzer.git
 
 ---
 
-## Navigate to Project
+## Navigate
 
 ```bash
-cd github-profile-analyzer
+cd Github-Analyzer
 ```
 
 ---
@@ -267,17 +380,17 @@ npm install
 
 ## Configure Environment Variables
 
-Create a `.env` file in the root directory.
+Create a `.env` file.
 
 ```env
 PORT=5001
 
 DB_HOST=localhost
 DB_USER=root
-DB_PASSWORD=your_mysql_password
+DB_PASSWORD=your_password
 DB_NAME=github_analyzer
 
-GITHUB_TOKEN=your_github_personal_access_token
+GITHUB_TOKEN=your_github_token
 ```
 
 ---
@@ -290,11 +403,27 @@ mysql -u root < database.sql
 
 ---
 
-## Run Development Server
+## Start Development Server
 
 ```bash
 npm run dev
 ```
+
+---
+
+# 🚀 Deployment
+
+Frontend
+
+- Vercel
+
+Backend
+
+- Vercel
+
+Database
+
+- MySQL
 
 ---
 
@@ -316,18 +445,19 @@ npm run dev
 # 📈 Skills Demonstrated
 
 - REST API Development
-- Backend Architecture
-- Service Layer Design
-- GitHub API Integration
+- Express.js
+- Node.js
 - MySQL Database Design
-- CRUD Operations
-- Data Analytics
-- Repository Analysis
-- Request Validation
-- Error Handling
-- Environment Configuration
-- JSON APIs
+- Third-party API Integration
+- GitHub REST API
+- Service Layer Architecture
 - Clean Code Principles
+- Error Handling
+- Validation
+- Authentication Ready Design
+- Data Analytics
+- Full Stack Development
+- Responsive UI Development
 
 ---
 
@@ -337,13 +467,37 @@ npm run dev
 - GitHub OAuth Login
 - Redis Caching
 - Docker Support
-- Swagger API Documentation
+- Swagger Documentation
 - Charts & Graphs
-- Export Reports (PDF/CSV)
+- Export PDF Reports
+- CSV Export
 - Email Notifications
-- CI/CD Pipeline
 - Unit Testing
-- Integration Testing
+- CI/CD Pipeline
+
+---
+
+# 🌍 Project Links
+
+## 💻 Live Website
+
+https://github-analyzer-uzc4.vercel.app
+
+## 📂 GitHub Repository
+
+https://github.com/mohdasad-dev/Github-Analyzer.git
+
+---
+
+# 🙏 Acknowledgements
+
+- GitHub REST API
+- React
+- Express.js
+- Node.js
+- MySQL
+- Tailwind CSS
+- Vite
 
 ---
 
@@ -351,7 +505,7 @@ npm run dev
 
 **Md Asad**
 
-**Full Stack Developer | MERN Stack Developer**
+Full Stack Developer | MERN Stack Developer
 
 ### GitHub
 
@@ -365,10 +519,10 @@ https://www.linkedin.com/in/md-asad-dev/
 
 # ⭐ Support
 
-If you found this project helpful, consider giving it a ⭐ on GitHub. It helps others discover the project and supports future development.
+If you found this project helpful, consider giving it a ⭐ on GitHub.
 
 ---
 
-## 📄 License
+# 📄 License
 
 This project is licensed under the MIT License.
